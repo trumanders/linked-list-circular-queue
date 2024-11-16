@@ -1,5 +1,4 @@
 #include <iostream>
-#include "queue.h"
 
 /**
  * @brief A multiple instance circular queue implemented using a circular singly
@@ -7,16 +6,16 @@
  * 
  */
 
-// struct Node {
-//     int data;
-//     Node *next;
-// };
+struct Node {
+    int data;
+    Node *next;
+};
 
-// struct Queue {
-//     Node *head;
-//     Node *tail;
-//     int size;
-// };
+struct Queue {
+    Node *head;
+    Node *tail;
+    int size;
+};
 
 /* CREATE FUNCTION */
     // Use function to create instance
@@ -37,27 +36,7 @@
     // next shall point to the node that is pointed to by HEAD (CIRCULAR)
     // TAIL is left at this last node
 void createQueue(Queue* queue, int size) {
-    if (size < 4) {        
-        return;    
-    }
 
-    // Create first node
-    Node* node1 = new Node();
-    // Queue head and tail point to new node
-    queue->head = node1;
-    queue->tail = node1;
-
-    // Create node 2
-    Node *node2 = new Node();
-    // Tail node (previous) next = new node 2
-    queue->tail->next = node2;
-    // Move tail to new node
-    queue->tail = node2;
-
-    for (int i = 0; i < size; i++) {
-        
-
-    }
 }
 
 
@@ -89,24 +68,21 @@ void write(int data) {
 
     // After reading last node - the queue is EMPTY, MOVE HEAD TO NEXT NODE
     // If reading when empty, return error / false // nullptr or something
-void read()
-{
+void read() {
 
 }
 
 
 /* FUNCTION TO MAKE QUEUE EMPTY */
     // Move TAIL to node BEFORE HEAD
-void emotyQueue()
-{
+void emotyQueue() {
 
 }
 
 
 /* FUNCTION TO RETURN NUMBER OF ELEMENTS */
     // Return counter
-int getNumberOfElements()
-{
+int getNumberOfElements() {
     
 }
 
@@ -132,8 +108,7 @@ int getNumberOfElements()
     // 
     // WHen decreasing size of list, since we delete after tail, the nodes that we delete
     // will either be empty OR HEAD, satisfying the requirement that always delet the oldest DATA (head)
-void resize(int new_size)
-{
+void resize(int new_size) {
 
 }
 
@@ -159,25 +134,4 @@ void destroy() {
 
 /* Submit ZIP-file with FOUR FILES: queue.cpp, tests.cpp, queue.h, makefile.txt */
 
-
-
-
-
-
-
-
-
-
 // Use function to destroy instance
-
-
-
-
-
-int main()
-{
-
-    return 0;
-}
-
-
