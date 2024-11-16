@@ -1,4 +1,4 @@
-#include <iostrean>
+#include <iostream>
 
 /* CREATE FUNCTION */
     // Use function to create instance
