@@ -1,5 +1,22 @@
 #include <iostream>
 
+/**
+ * @brief A multiple instance circular queue implemented using a circular singly
+ * linked list to store and restore data of type int.
+ * 
+ */
+
+struct Node {
+    int data;
+    Node *next;
+};
+
+struct Queue {
+    Node *head;
+    Node *tail;
+    int size;
+};
+
 /* CREATE FUNCTION */
     // Use function to create instance
     // Size is passed to the function, size > 3
@@ -18,6 +35,9 @@
     // final nodde:
     // next shall point to the node that is pointed to by HEAD (CIRCULAR)
     // TAIL is left at this last node
+void createInstance(int size) {
+
+}
 
 
 /* WRITE DATA FUNCTION */
@@ -35,6 +55,9 @@
     // When queue is full, OVERWRITE. Counter cannot be larger than number of nodes
     // MOVE TAIL as usual, overwrite.
     // MOVE HEAD to next node - because head must point to the oldest data.
+void write(int data) {
+
+}
 
 
 /* READ FUNCTION */
@@ -45,14 +68,26 @@
 
     // After reading last node - the queue is EMPTY, MOVE HEAD TO NEXT NODE
     // If reading when empty, return error / false // nullptr or something
+void read()
+{
+
+}
 
 
 /* FUNCTION TO MAKE QUEUE EMPTY */
     // Move TAIL to node BEFORE HEAD
+void emotyQueue()
+{
+
+}
 
 
 /* FUNCTION TO RETURN NUMBER OF ELEMENTS */
     // Return counter
+int getNumberOfElements()
+{
+    
+}
 
 
 /* FUNCTION TO RESIZE QUEUE - NEW SIZE MUST BE > 3- CHECK THAT! */ 
@@ -76,10 +111,17 @@
     // 
     // WHen decreasing size of list, since we delete after tail, the nodes that we delete
     // will either be empty OR HEAD, satisfying the requirement that always delet the oldest DATA (head)
+void resize(int new_size)
+{
+
+}
 
 /* DESTROY FUNCTION */
     // Free memory of the deleted node. Release the allocated memory.
     // This is because we allocate memoty dynamcally during runtime!! (using new?)
+void destroy() {
+
+}
 
 
 /* TEST THE MODULE USING ASSERTIONS */
