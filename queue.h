@@ -1,20 +1,20 @@
-#include <iostream>
-
 /**
  * @brief A multiple instance circular queue implemented using a circular singly
  * linked list to store and restore data of type int.
  * 
  */
 
+#ifndef QUEUE_H
+#define QUEUE_H
 struct Node {
     int data;
     Node *next;
 };
-
 struct Queue {
     Node *head;
     Node *tail;
     int size;
+    int elementCounter;
 };
 
 /* CREATE FUNCTION */
@@ -82,8 +82,8 @@ void emotyQueue() {
 
 /* FUNCTION TO RETURN NUMBER OF ELEMENTS */
     // Return counter
-int getNumberOfElements() {
-    
+int getNumberOfElements(Queue* queue) {
+    return queue->elementCounter;
 }
 
 

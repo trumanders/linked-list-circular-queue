@@ -33,31 +33,28 @@
     // "next" of TAIL-node (previous node) now points to new node
     // move tail to point at this node
 
-    // final nodde:
+    // final node:
     // next shall point to the node that is pointed to by HEAD (CIRCULAR)
-    // TAIL is left at this last node
-void createQueue(Queue* queue, int size) {
-    if (size < 4) {        
-        return;    
+    // TAIL is left at this last node    
+
+void createQueue(Queue *queue, int size)
+{
+    if (size < 4)
+    {
+        return;
     }
 
-    // Create first node
-    Node* node1 = new Node();
-    // Queue head and tail point to new node
-    queue->head = node1;
-    queue->tail = node1;
+    Node *firstNode = new Node();
+    queue->head = firstNode;
+    queue->tail = firstNode;
 
-    // Create node 2
-    Node *node2 = new Node();
-    // Tail node (previous) next = new node 2
-    queue->tail->next = node2;
-    // Move tail to new node
-    queue->tail = node2;
-
-    for (int i = 0; i < size; i++) {
-        
-
+    for (int i = 0; i < size - 1; i++)
+    {
+        Node *newNode = new Node();
+        queue->tail->next = newNode;
+        queue->tail = newNode;
     }
+    queue->tail->next = queue->head;
 }
 
 
@@ -76,8 +73,8 @@ void createQueue(Queue* queue, int size) {
     // When queue is full, OVERWRITE. Counter cannot be larger than number of nodes
     // MOVE TAIL as usual, overwrite.
     // MOVE HEAD to next node - because head must point to the oldest data.
-void write(int data) {
-
+void write(Queue* queue, int data) {
+    
 }
 
 
@@ -159,25 +156,4 @@ void destroy() {
 
 /* Submit ZIP-file with FOUR FILES: queue.cpp, tests.cpp, queue.h, makefile.txt */
 
-
-
-
-
-
-
-
-
-
 // Use function to destroy instance
-
-
-
-
-
-int main()
-{
-
-    return 0;
-}
-
-
