@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstddef>
+#include <climits>
 #include "queue.h"
 
 /**
@@ -45,12 +46,14 @@ bool createQueue(Queue *queue, size_t size)
     bool isCreated = false;
     if (size >= queue->minSize) {   
         Node *firstNode = new Node();
+        firstNode->data = INT_MIN;
         queue->head = firstNode;
         queue->tail = firstNode;
 
         for (int i = 0; i < size - 1; i++)
         {
             Node *newNode = new Node();
+            newNode->data = INT_MIN;
             queue->tail->next = newNode;
             queue->tail = newNode;
         }
