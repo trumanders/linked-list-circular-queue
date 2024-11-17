@@ -2,7 +2,8 @@
  * @file queue.h
  * @author Anders Johansson (anderssvenaxelj@gmail.com)
  * @brief A multiple instance circular queue implemented using a circular singly
- * linked list to store and restore data of type int.
+ * linked list to store and restore data of type int. It has functions for creating, writing to, reading from,
+ * resizing, and destroying the queue.
  * @version 0.1
  * @date 2024-11-17
  * 
@@ -45,6 +46,14 @@ struct Queue {
     // final nodde:
     // next shall point to the node that is pointed to by HEAD (CIRCULAR)
     // TAIL is left at this last node
+
+/**
+ * @brief Create a queue with the given size. The size must be >= 4.
+ * 
+ * @param queue Pointer to the Queue object to be created.
+ * @param size The size of the queue.
+ * @return True if the queue was created, false otherwise.
+ */
 bool createQueue(Queue *queue, size_t size);
 
 /* WRITE DATA FUNCTION */

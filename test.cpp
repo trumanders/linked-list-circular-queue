@@ -4,18 +4,22 @@
 
 const int MIN_QUEUE_SIZE = 4;
 
-int calculateSize(Queue* queue) {   
-    if (queue == nullptr || queue->head == nullptr)
-        return 0; 
-
-    Node *current = queue->head;
-    int size = 1;
-    while (current->next != queue->head) {
-        current = current->next;
-        size++;        
+int calculateSize(Queue* queue) {
+    int size = 0;
+    if (queue != nullptr && queue->head != nullptr) {    
+        Node *current = queue->head;
+        size++;
+        while (current->next != queue->head) {
+            current = current->next;
+            size++;        
+        }        
+    }
+    else {
+        size = 0;
     }
     return size;
 }
+
 void testCreateQueue() {
     std::cout << "Test create Queue of size 4: ";
     size_t size = 4;
@@ -74,7 +78,8 @@ void testGetNumberOfElements() {
 
     std::cout << "Test getNumberOfElements: ";
     Queue* queue = new Queue(MIN_QUEUE_SIZE);
-    
+
+    createQueue(queue, queueSize);
     assert(getNumberOfElements(queue) == 0);
 
     write(queue, 1);
@@ -99,55 +104,74 @@ void testReadQueue() {
     createQueue(queue, 4);
 
     write(queue, 1);
-    assert(read(queue) == 1);
-    assert(read(queue) == 0);
-    assert(read(queue) == 0);
-    assert(read(queue) == 0);
-    assert(read(queue) == 1);
+    write(queue, 2);
+    write(queue, 3);
 
-    std::cout << read(queue) << std::endl;
-}
+    assert(read(queue) == 1);
+    assert(read(queue) == 2);
+    assert(read(queue) == 3);
 
-int calculateSize(Queue* queue) {    
-    Node *current = queue->head;
-    int size = 1;
-    while (current->next != queue->head) {
-        current = current->next;
-        size++;        
-    }
-    return size;
+    std::cout << "ok!" << std::endl;
 }
 
 void testResizeQueue() {
+    std::cout << "Test resize queue: ";
     Queue* queue = new Queue(MIN_QUEUE_SIZE);
     createQueue(queue, 4);
-    std::cout << calculateSize(queue) << " ";
+    assert(calculateSize(queue) == 4);
+
     resize(queue, 1000);
-    std::cout << calculateSize(queue) << " ";
+    assert(calculateSize(queue) == 1000);
+
     resize(queue, 54);
-    std::cout << calculateSize(queue) << " ";
+    assert(calculateSize(queue) == 54);
+
     resize(queue, 55);
-    std::cout << calculateSize(queue) << " ";
+    assert(calculateSize(queue) == 55);
+
     resize(queue, 21);
-    std::cout << calculateSize(queue) << " ";
+    assert(calculateSize(queue) == 21);
+
+    std::cout << "ok!" << std::endl;
 }
 
 void testDestroy() {
+    std::cout << "Test destroy queue: ";
     Queue* queue = new Queue(MIN_QUEUE_SIZE);
     createQueue(queue, 100);
     assert(queue != nullptr);
     destroy(queue);
     assert(queue == nullptr);
+
+    std::cout << "ok!" << std::endl;
 }
 
-
+void testOverWriteAndRead() {
+    std::cout << "Test overwrite and read: ";
+    Queue* queue = new Queue(MIN_QUEUE_SIZE);
+    createQueue(queue, 4);
+    write(queue, 1);
+    write(queue, 2);
+    write(queue, 3);
+    write(queue, 4);
+    write(queue, 5);
+    assert(read(queue) == 2);
+    assert(read(queue) == 3);
+    assert(read(queue) == 4);
+    assert(read(queue) == 5);
+    assert(read(queue) == 0);
+    assert(read(queue) == 0);
+    std::cout << "ok!" << std::endl;
+}
 
 int main() {
-    //testGetNumberOfElements();
     testCreateQueue();
-    // testWriteQueue();
-    // testReadQueue();
-    // testResizeQueue();
-    // testDestroy();
+    testWriteQueue();
+    testGetNumberOfElements();    
+    testReadQueue();
+    testResizeQueue();
+    testDestroy();
+    testOverWriteAndRead();   
+
     return 0;
 }

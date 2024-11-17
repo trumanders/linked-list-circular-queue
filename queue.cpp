@@ -42,22 +42,23 @@ const int queueMinSize = 4;
 
 bool createQueue(Queue *queue, size_t size)
 {
-    if (size < queue->minSize) {
-        return false;
-    }
-    Node *firstNode = new Node();
-    queue->head = firstNode;
-    queue->tail = firstNode;
+    bool isCreated = false;
+    if (size >= queue->minSize) {   
+        Node *firstNode = new Node();
+        queue->head = firstNode;
+        queue->tail = firstNode;
 
-    for (int i = 0; i < size - 1; i++)
-    {
-        Node *newNode = new Node();
-        queue->tail->next = newNode;
-        queue->tail = newNode;
+        for (int i = 0; i < size - 1; i++)
+        {
+            Node *newNode = new Node();
+            queue->tail->next = newNode;
+            queue->tail = newNode;
+        }
+        queue->tail->next = queue->head;
+        queue->size = size;
+        isCreated = true;
     }
-    queue->tail->next = queue->head;
-    queue->size = size;
-    return true;
+    return isCreated;
 }
 
 /* WRITE DATA FUNCTION */
