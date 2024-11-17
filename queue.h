@@ -1,20 +1,30 @@
 /**
+ * @file queue.h
+ * @author Anders Johansson (anderssvenaxelj@gmail.com)
  * @brief A multiple instance circular queue implemented using a circular singly
  * linked list to store and restore data of type int.
+ * @version 0.1
+ * @date 2024-11-17
  * 
+ * @copyright Copyright (c) 2024 * 
  */
 
 #ifndef QUEUE_H
 #define QUEUE_H
+
 struct Node {
     int data;
     Node *next;
 };
+
 struct Queue {
     Node *head;
     Node *tail;
-    int size;
-    int elementCounter;
+    size_t size;
+    const int minSize;
+    size_t elementCounter;
+
+    Queue(int minSize) : head(nullptr), tail(nullptr), size(0), minSize(minSize), elementCounter(0) {}
 };
 
 /* CREATE FUNCTION */
@@ -35,10 +45,7 @@ struct Queue {
     // final nodde:
     // next shall point to the node that is pointed to by HEAD (CIRCULAR)
     // TAIL is left at this last node
-void createQueue(Queue* queue, int size) {
-
-}
-
+bool createQueue(Queue *queue, size_t size);
 
 /* WRITE DATA FUNCTION */
     // Since we're creating a QUEUE, we write to the TAIL
@@ -55,10 +62,7 @@ void createQueue(Queue* queue, int size) {
     // When queue is full, OVERWRITE. Counter cannot be larger than number of nodes
     // MOVE TAIL as usual, overwrite.
     // MOVE HEAD to next node - because head must point to the oldest data.
-void write(int data) {
-
-}
-
+void write(Queue *queue, int data);
 
 /* READ FUNCTION */
     // We read from HEAD - store the data in variable
@@ -68,24 +72,16 @@ void write(int data) {
 
     // After reading last node - the queue is EMPTY, MOVE HEAD TO NEXT NODE
     // If reading when empty, return error / false // nullptr or something
-void read() {
-
-}
-
+int read(Queue *queue);
 
 /* FUNCTION TO MAKE QUEUE EMPTY */
     // Move TAIL to node BEFORE HEAD
-void emotyQueue() {
-
-}
+void emotyQueue();
 
 
 /* FUNCTION TO RETURN NUMBER OF ELEMENTS */
     // Return counter
-int getNumberOfElements(Queue* queue) {
-    return queue->elementCounter;
-}
-
+int getNumberOfElements(Queue *queue);
 
 /* FUNCTION TO RESIZE QUEUE - NEW SIZE MUST BE > 3- CHECK THAT! */ 
     // order is important:
@@ -108,17 +104,20 @@ int getNumberOfElements(Queue* queue) {
     // 
     // WHen decreasing size of list, since we delete after tail, the nodes that we delete
     // will either be empty OR HEAD, satisfying the requirement that always delet the oldest DATA (head)
-void resize(int new_size) {
-
-}
+void resize(Queue* queue, size_t new_size);
 
 /* DESTROY FUNCTION */
     // Free memory of the deleted node. Release the allocated memory.
     // This is because we allocate memoty dynamcally during runtime!! (using new?)
-void destroy() {
+void destroy(Queue*& queue);
 
-}
+/**
+ * @brief Check if passed data is in the list
+ * 
+ * @param data The integer data look for in the list
+ */
 
+#endif
 
 /* TEST THE MODULE USING ASSERTIONS */
 
