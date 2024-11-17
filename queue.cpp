@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstddef>
 #include "queue.h"
 
 /**
@@ -35,15 +36,18 @@
 
     // final node:
     // next shall point to the node that is pointed to by HEAD (CIRCULAR)
-    // TAIL is left at this last node    
+    // TAIL is left at this last node
 
-void createQueue(Queue *queue, int size)
+const int queueMinSize = 4;
+
+void hej() { std::cout << "hejhej" << std::endl; }
+
+bool createQueue(Queue *queue, size_t size)
 {
-    if (size < 4)
-    {
-        return;
+    if (size < queueMinSize) {
+        return false;
     }
-
+    queue->elementCounter = 0;
     Node *firstNode = new Node();
     queue->head = firstNode;
     queue->tail = firstNode;
@@ -55,6 +59,8 @@ void createQueue(Queue *queue, int size)
         queue->tail = newNode;
     }
     queue->tail->next = queue->head;
+    queue->size = size;
+    return true;
 }
 
 
@@ -73,8 +79,23 @@ void createQueue(Queue *queue, int size)
     // When queue is full, OVERWRITE. Counter cannot be larger than number of nodes
     // MOVE TAIL as usual, overwrite.
     // MOVE HEAD to next node - because head must point to the oldest data.
+
+
+/**
+ * @brief Writes data to the queue at the position indicated by the tail.
+ * 
+ * @param queue Pointer to the Queue object where data is to be written.
+ * @param data The integer data to be written into the queue.
+ */
 void write(Queue* queue, int data) {
-    
+    queue->tail = queue->tail->next;
+    queue->tail->data = data;
+    if (queue->elementCounter < queue->size) {
+        queue->elementCounter++;        
+    }
+    else {
+        queue->head = queue->head->next;
+    }        
 }
 
 
@@ -86,25 +107,33 @@ void write(Queue* queue, int data) {
 
     // After reading last node - the queue is EMPTY, MOVE HEAD TO NEXT NODE
     // If reading when empty, return error / false // nullptr or something
-void read()
-{
-
+int read(Queue* queue) {
+    int readData = queue->head->data;
+    queue->head->data = 0;
+    queue->head = queue->head->next;
+    queue->elementCounter--;
+    return readData;
 }
 
 
 /* FUNCTION TO MAKE QUEUE EMPTY */
     // Move TAIL to node BEFORE HEAD
-void emotyQueue()
-{
-
+void emotyQueue(Queue* queue) {
+    if (queue->elementCounter == 0) {
+        return;
+    }
+    Node *current = queue->head;
+    while (current->next != queue->head) {
+        current = current->next;
+    }
+    queue->tail = current;
 }
 
 
 /* FUNCTION TO RETURN NUMBER OF ELEMENTS */
     // Return counter
-int getNumberOfElements()
-{
-    
+int getNumberOfElements(Queue* queue) {
+    return queue->elementCounter;
 }
 
 
@@ -129,16 +158,43 @@ int getNumberOfElements()
     // 
     // WHen decreasing size of list, since we delete after tail, the nodes that we delete
     // will either be empty OR HEAD, satisfying the requirement that always delet the oldest DATA (head)
-void resize(int new_size)
-{
-
+void resize(Queue* queue, size_t newSize) {
+    if (newSize == queue->size || newSize < 0 || newSize < queue->minSize) {
+        return;
+    }
+    if (newSize > queue->size) {
+        for (int i = 0; i < newSize - queue->size; i++) {
+            Node *newNode = new Node();
+            newNode->next = queue->tail->next;
+            queue->tail->next = newNode;
+        }
+    }
+    if (newSize < queue->size) {
+        for (int i = 0; i < queue->size - newSize; i++) {
+            Node *deletedNode = queue->tail->next;
+            queue->tail->next = deletedNode->next;
+            free(deletedNode);
+            deletedNode = nullptr;
+        }
+    }
+    queue->size = newSize;
 }
 
 /* DESTROY FUNCTION */
     // Free memory of the deleted node. Release the allocated memory.
     // This is because we allocate memoty dynamcally during runtime!! (using new?)
-void destroy() {
-
+void destroy(Queue*& queue) {
+    if (!queue)
+        return;
+    Node *current = queue->head;
+    Node *temp;
+    do {
+        temp = current->next;  // points to what last iteration?
+        free(current);
+        current = temp;
+    } while (current != queue->head);
+    free(queue);
+    queue = nullptr;
 }
 
 
