@@ -40,14 +40,11 @@
 
 const int queueMinSize = 4;
 
-void hej() { std::cout << "hejhej" << std::endl; }
-
 bool createQueue(Queue *queue, size_t size)
 {
-    if (size < queueMinSize) {
+    if (size < queue->minSize) {
         return false;
     }
-    queue->elementCounter = 0;
     Node *firstNode = new Node();
     queue->head = firstNode;
     queue->tail = firstNode;
@@ -62,7 +59,6 @@ bool createQueue(Queue *queue, size_t size)
     queue->size = size;
     return true;
 }
-
 
 /* WRITE DATA FUNCTION */
     // Since we're creating a QUEUE, we write to the TAIL
@@ -79,7 +75,6 @@ bool createQueue(Queue *queue, size_t size)
     // When queue is full, OVERWRITE. Counter cannot be larger than number of nodes
     // MOVE TAIL as usual, overwrite.
     // MOVE HEAD to next node - because head must point to the oldest data.
-
 
 /**
  * @brief Writes data to the queue at the position indicated by the tail.
@@ -98,7 +93,6 @@ void write(Queue* queue, int data) {
     }        
 }
 
-
 /* READ FUNCTION */
     // We read from HEAD - store the data in variable
     // MOVE HEAD to next node!
@@ -115,10 +109,9 @@ int read(Queue* queue) {
     return readData;
 }
 
-
 /* FUNCTION TO MAKE QUEUE EMPTY */
     // Move TAIL to node BEFORE HEAD
-void emotyQueue(Queue* queue) {
+void emptyQueue(Queue* queue) {
     if (queue->elementCounter == 0) {
         return;
     }
@@ -129,13 +122,11 @@ void emotyQueue(Queue* queue) {
     queue->tail = current;
 }
 
-
 /* FUNCTION TO RETURN NUMBER OF ELEMENTS */
     // Return counter
 int getNumberOfElements(Queue* queue) {
     return queue->elementCounter;
 }
-
 
 /* FUNCTION TO RESIZE QUEUE - NEW SIZE MUST BE > 3- CHECK THAT! */ 
     // order is important:
@@ -190,10 +181,10 @@ void destroy(Queue*& queue) {
     Node *temp;
     do {
         temp = current->next;  // points to what last iteration?
-        free(current);
+        delete current;
         current = temp;
     } while (current != queue->head);
-    free(queue);
+    delete queue;
     queue = nullptr;
 }
 
