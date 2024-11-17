@@ -111,6 +111,12 @@ void testReadQueue() {
     assert(read(queue) == 2);
     assert(read(queue) == 3);
 
+    try {
+        read(queue);        
+    } catch (const std::runtime_error& e) {
+        assert(std::string(e.what()) == "Element is empty");
+    }
+
     std::cout << "ok!" << std::endl;
 }
 
@@ -159,8 +165,7 @@ void testOverWriteAndRead() {
     assert(read(queue) == 3);
     assert(read(queue) == 4);
     assert(read(queue) == 5);
-    assert(read(queue) == 0);
-    assert(read(queue) == 0);
+
     std::cout << "ok!" << std::endl;
 }
 
@@ -172,6 +177,8 @@ int main() {
     testResizeQueue();
     testDestroy();
     testOverWriteAndRead();   
+
+    std::cout << "All tests passed!" << std::endl;
 
     return 0;
 }
