@@ -1,44 +1,46 @@
 #include <iostream>
 #include <cstddef>
 #include <climits>
+#include <assert.h>
 #include "queue.h"
 
+const int MIN_QUEUE_SIZE = 4;
 struct node_t {
     int data;
     struct node_t *next;
+    bool isEmpty;
 };
 
 struct queue_t {
     node_t *head;
     node_t *tail;
     size_t size;
-    size_t min_size;
     size_t element_counter;
+
+    queue_t() : head(nullptr), tail(nullptr), element_counter(0) {}
 };
 
-const int queueMinSize = 4;
-
-bool createQueue(Queue *queue, size_t size)
+queue_t* createQueue(const size_t size)
 {
-    bool isCreated = false;
-    if (size >= queue->minSize) {   
-        Node *firstNode = new Node();
-        firstNode->data = INT_MIN;
-        queue->head = firstNode;
-        queue->tail = firstNode;
+    assert(size >= MIN_QUEUE_SIZE);
+    queue_t *queue = new queue_t();
+    queue->size = size;
 
-        for (int i = 0; i < size - 1; i++)
-        {
-            Node *newNode = new Node();
-            newNode->data = INT_MIN;
-            queue->tail->next = newNode;
-            queue->tail = newNode;
-        }
-        queue->tail->next = queue->head;
-        queue->size = size;
-        isCreated = true;
+    node_t *firstNode = new node_t;
+    firstNode->isEmpty = true;
+    queue->head = firstNode;
+    queue->tail = firstNode;
+
+    for (int i = 0; i < size - 1; i++)
+    {
+        node_t* newNode = new node_t;
+        newNode->isEmpty = true;
+        queue->tail->next = newNode;
+        queue->tail = newNode;
     }
-    return isCreated;
+    queue->tail->next = queue->head;
+
+    return queue;
 }
 
 void write(Queue* queue, int data) {
@@ -54,7 +56,7 @@ void write(Queue* queue, int data) {
 
 
 int read(Queue* queue) {
-    if (!queue->head) {
+    if (queue->head->isEmpty) {
         throw std::runtime_error("Queue is empty");
     }
     int readData = queue->head->data;
