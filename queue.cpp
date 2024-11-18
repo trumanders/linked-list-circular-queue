@@ -5,22 +5,11 @@
 #include "queue.h"
 
 const int MIN_QUEUE_SIZE = 4;
-struct node_t {
-    int data;
-    struct node_t *next;
-    bool isEmpty;
-};
 
-struct queue_t {
-    node_t *head;
-    node_t *tail;
-    size_t size;
-    size_t element_counter;
 
-    queue_t() : head(nullptr), tail(nullptr), element_counter(0) {}
-};
 
-queue_t* createQueue(const size_t size)
+
+queue_t* create(const size_t size)
 {
     assert(size >= MIN_QUEUE_SIZE);
     queue_t *queue = new queue_t();
@@ -43,11 +32,11 @@ queue_t* createQueue(const size_t size)
     return queue;
 }
 
-void write(Queue* queue, int data) {
+void write(queue_t* queue, int data) {
     queue->tail = queue->tail->next;
     queue->tail->data = data;
-    if (queue->elementCounter < queue->size) {
-        queue->elementCounter++;        
+    if (queue->element_counter < queue->size) {
+        queue->element_counter++;        
     }
     else {
         queue->head = queue->head->next;
@@ -55,22 +44,22 @@ void write(Queue* queue, int data) {
 }
 
 
-int read(Queue* queue) {
+int read(queue_t* queue) {
     if (queue->head->isEmpty) {
         throw std::runtime_error("Queue is empty");
     }
     int readData = queue->head->data;
     queue->head->isEmpty = true;
     queue->head = queue->head->next;
-    queue->elementCounter--;
+    queue->element_counter--;
     return readData;
 }
 
-void emptyQueue(Queue* queue) {
-    if (queue->elementCounter == 0) {
+void emptyQueue(queue_t* queue) {
+    if (queue->element_counter == 0) {
         return;
     }
-    Node *current = queue->head;
+    node_t *current = queue->head;
     while (current->next != queue->head) {
         current = current->next;
     }
@@ -78,39 +67,38 @@ void emptyQueue(Queue* queue) {
 }
 
 
-int getNumberOfElements(Queue* queue) {
-    return queue->elementCounter;
+int getNumberOfElements(queue_t* queue) {
+    return queue->element_counter;
 }
 
-void resize(Queue* queue, size_t newSize) {
-    if (newSize == queue->size || newSize < 0 || newSize < queue->minSize) {
-        return;
-    }
-    if (newSize > queue->size) {
+void resize(queue_t* queue, size_t newSize) {
+    assert(queue != nullptr && newSize >= MIN_QUEUE_SIZE && newSize != queue->size);
+    if (newSize > queue->size)
+    {
         for (int i = 0; i < newSize - queue->size; i++) {
-            Node *newNode = new Node();
+            node_t* newNode = new node_t;
             newNode->next = queue->tail->next;
             queue->tail->next = newNode;
         }
     }
     if (newSize < queue->size) {
         for (int i = 0; i < queue->size - newSize; i++) {
-            Node *deletedNode = queue->tail->next;
+            node_t* deletedNode = queue->tail->next;
             queue->tail->next = deletedNode->next;
-            free(deletedNode);
+            delete deletedNode;
             deletedNode = nullptr;
         }
     }
     queue->size = newSize;
 }
 
-void destroy(Queue*& queue) {
+void destroy(queue_t*& queue) {
     if (!queue)
         return;
-    Node *current = queue->head;
-    Node *temp;
+    node_t *current = queue->head;
+    node_t *temp;
     do {
-        temp = current->next;  // points to what last iteration?
+        temp = current->next;
         delete current;
         current = temp;
     } while (current != queue->head);

@@ -13,17 +13,28 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-struct node_t;
-struct queue_t;
+struct node_t {
+    int data;
+    struct node_t *next;
+    bool isEmpty;
+};
+
+struct queue_t {
+    node_t *head;
+    node_t *tail;
+    size_t size;
+    size_t element_counter;
+
+    queue_t() : head(nullptr), tail(nullptr), element_counter(0) {}
+};
 
 /**
- * @brief Create the queue nodes with the given size. The size must be >= 4.
- *
- * @param queue Pointer to the Queue object to be created.
- * @param size The size of the queue.
- * @return True if the queue was created, false otherwise.
+ * @brief Creates a new instance of the circular queue and creates the nodes
+ * 
+ * @param size The number of nodes that will be created in the queue
+ * @return queue_t* The pointer to the created queue
  */
-queue_t create(size_t size);
+queue_t* create(size_t size);
 
 /**
  * @brief Write data to the queue.
