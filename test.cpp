@@ -4,8 +4,8 @@
 
 const int MIN_QUEUE_SIZE = 4;
 
-int calculateSize(queue_t* queue) {
-    int size = 0;
+size_t calculateSize(queue_t* queue) {
+    size_t size = 0;
     if (queue != nullptr && queue->head != nullptr) {    
         node_t *current = queue->head;
         size++;
@@ -65,8 +65,6 @@ void testWriteQueue() {
     assert(queue->element_counter == 4);
 
     std::cout << "ok!" << std::endl;
-
-    destroy(queue);
 }
 
 void testGetNumberOfElements() {

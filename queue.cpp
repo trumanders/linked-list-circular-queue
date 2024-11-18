@@ -17,7 +17,7 @@ queue_t* create(const size_t size)
     queue->head = firstNode;
     queue->tail = firstNode;
 
-    for (int i = 0; i < size - 1; i++)
+    for (size_t i = 0; i < size - 1; i++)
     {
         node_t* newNode = new node_t;
         newNode->isEmpty = true;
@@ -73,14 +73,14 @@ void resize(queue_t* queue, size_t newSize) {
     assert(queue != nullptr && newSize >= MIN_QUEUE_SIZE && newSize != queue->size);
     if (newSize > queue->size)
     {
-        for (int i = 0; i < newSize - queue->size; i++) {
+        for (size_t i = 0; i < newSize - queue->size; i++) {
             node_t* newNode = new node_t;
             newNode->next = queue->tail->next;
             queue->tail->next = newNode;
         }
     }
     if (newSize < queue->size) {
-        for (int i = 0; i < queue->size - newSize; i++) {
+        for (size_t i = 0; i < queue->size - newSize; i++) {
             node_t* deletedNode = queue->tail->next;
             queue->tail->next = deletedNode->next;
             delete deletedNode;
