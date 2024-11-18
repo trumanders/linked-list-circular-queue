@@ -13,30 +13,17 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-struct Node {
-    int data;
-    Node *next;
-    bool isEmpty;
-};
-
-struct Queue {
-    Node *head;
-    Node *tail;
-    size_t size;
-    const int minSize;
-    size_t elementCounter;
-
-    Queue(int minSize) : head(nullptr), tail(nullptr), size(0), minSize(minSize), elementCounter(0) {}
-};
+struct node_t;
+struct queue_t;
 
 /**
  * @brief Create the queue nodes with the given size. The size must be >= 4.
- * 
+ *
  * @param queue Pointer to the Queue object to be created.
  * @param size The size of the queue.
  * @return True if the queue was created, false otherwise.
  */
-bool createQueue(Queue *queue, size_t size);
+queue_t create(size_t size);
 
 /**
  * @brief Write data to the queue.
@@ -47,7 +34,7 @@ bool createQueue(Queue *queue, size_t size);
  * If the queue is not full, increment the element counter and write the data to the next
  * node. If the queue is full, move the head to the next node to overwrite the oldest data.
  */
-void write(Queue *queue, int data);
+void write(queue_t* queue, int data);
 
 /**
  * @brief Read data from the front of the queue
@@ -56,7 +43,7 @@ void write(Queue *queue, int data);
  * @return The data at the front of the queue
  * @throw std::runtime_error if the element is empty
  */
-int read(Queue *queue);
+int read(queue_t* queue);
 
 
 /**
@@ -65,7 +52,7 @@ int read(Queue *queue);
  * This function will move the tail to the node before the head, effectively
  * making the queue empty. The counter will be set to 0.
  */
-void emptyQueue();
+void emptyQueue(queue_t* queue);
 
 
 /**
@@ -74,7 +61,7 @@ void emptyQueue();
  * @param queue The queue for which to return the number of elements.
  * @return The number of elements in the queue.
  */
-int getNumberOfElements(Queue *queue);
+int getNumberOfElements(queue_t* queue);
 
 /**
  * @brief Resizes the queue to a new size. If the new size is larger than the old size,
@@ -85,7 +72,7 @@ int getNumberOfElements(Queue *queue);
  * @param queue The queue to be resized.
  * @param newSize The new size of the queue.
  */
-void resize(Queue* queue, size_t new_size);
+void resize(queue_t* queue, size_t new_size);
 
 
 /**
@@ -97,6 +84,6 @@ void resize(Queue* queue, size_t new_size);
  * @param queue Reference to the pointer of the Queue to be destroyed. It is passed by reference
  * to allow access to the pointer itself.
  */
-void destroy(Queue*& queue);
+void destroy(queue_t*& queue);
 
 #endif

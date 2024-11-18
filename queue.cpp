@@ -3,6 +3,19 @@
 #include <climits>
 #include "queue.h"
 
+struct node_t {
+    int data;
+    struct node_t *next;
+};
+
+struct queue_t {
+    node_t *head;
+    node_t *tail;
+    size_t size;
+    size_t min_size;
+    size_t element_counter;
+};
+
 const int queueMinSize = 4;
 
 bool createQueue(Queue *queue, size_t size)
