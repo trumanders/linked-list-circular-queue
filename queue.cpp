@@ -6,9 +6,6 @@
 
 const int MIN_QUEUE_SIZE = 4;
 
-
-
-
 queue_t* create(const size_t size)
 {
     assert(size >= MIN_QUEUE_SIZE);
@@ -35,6 +32,7 @@ queue_t* create(const size_t size)
 void write(queue_t* queue, int data) {
     queue->tail = queue->tail->next;
     queue->tail->data = data;
+    queue->tail->isEmpty = false;
     if (queue->element_counter < queue->size) {
         queue->element_counter++;        
     }
