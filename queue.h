@@ -13,20 +13,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-struct node_t {
-    int data;
-    struct node_t *next;
-    bool isEmpty;
-};
-
-struct queue_t {
-    node_t *head;
-    node_t *tail;
-    size_t size;
-    size_t element_counter;
-
-    queue_t() : head(nullptr), tail(nullptr), element_counter(0) {}
-};
+struct node_t;
+struct queue_t;
 
 /**
  * @brief Creates a new instance of the circular queue and creates the nodes

@@ -6,25 +6,47 @@
 
 const int MIN_QUEUE_SIZE = 4;
 
+struct node_t {
+    int data;
+    struct node_t *next;
+    bool isEmpty;
+};
+
+struct queue_t {
+    node_t *head;
+    node_t *tail;
+    size_t size;
+    size_t element_counter;
+
+    queue_t() : head(nullptr), tail(nullptr), element_counter(0) {}
+};
+
+queue_t* get_() {
+    return 
+}
+
 queue_t* create(const size_t size)
 {
     assert(size >= MIN_QUEUE_SIZE);
-    queue_t *queue = new queue_t();
-    queue->size = size;
-
-    node_t *firstNode = new node_t;
-    firstNode->isEmpty = true;
-    queue->head = firstNode;
-    queue->tail = firstNode;
-
-    for (size_t i = 0; i < size - 1; i++)
-    {
-        node_t* newNode = new node_t;
-        newNode->isEmpty = true;
-        queue->tail->next = newNode;
-        queue->tail = newNode;
+    queue_t *queue = nullptr;
+    try {
+        queue = new queue_t();
+        queue->size = size;
+        queue->head = new node_t;
+        queue->tail = queue->head;
+        for (size_t i = 0; i < size - 1; i++)
+        {
+            node_t *newNode = nullptr;
+            newNode = new node_t;
+            queue->tail->next = newNode;
+            queue->tail = newNode;
+        }
+        queue->tail->next = queue->head;
     }
-    queue->tail->next = queue->head;
+    catch (...) {
+        destroy(queue);
+        throw;
+    }
 
     return queue;
 }
@@ -91,10 +113,10 @@ void resize(queue_t* queue, size_t newSize) {
 }
 
 void destroy(queue_t*& queue) {
-    if (!queue)
+    if (!queue || !queue->head)
         return;
     node_t *current = queue->head;
-    node_t *temp;
+    node_t *temp = nullptr;
     do {
         temp = current->next;
         delete current;

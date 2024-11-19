@@ -4,6 +4,7 @@
 
 const int MIN_QUEUE_SIZE = 4;
 
+
 size_t calculateSize(queue_t* queue) {
     size_t size = 0;
     if (queue != nullptr && queue->head != nullptr) {    
