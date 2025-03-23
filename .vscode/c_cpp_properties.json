@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "name": "linux-gcc-x64",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/usr/include/c++/13",
+        " /usr/include/x86_64-linux-gnu/c++/13",
+        " /usr/include/c++/13/backward",
+        " /usr/lib/gcc/x86_64-linux-gnu/13/include",
+        " /usr/local/include",
+        " /usr/include/x86_64-linux-gnu",
+        " /usr/include"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "cppStandard": "${default}",
+      "cStandard": "${default}",
+      "compilerPath": "/usr/bin/gcc",
+      "intelliSenseMode": "linux-gcc-x64"
+    }
+  ],
+  "version": 4
+}
